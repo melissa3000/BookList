@@ -7,15 +7,24 @@
 // Redux works with the state data, React works with the views, together they
 // create a working app.
 
-import React, { Component } from 'react';
+// Promote BookList component to a container to connect React and Redux
 
-export default class BookList extends Component {
+import React, { Component } from 'react';
+// Using curly brace means we only import a single property from the library and
+// not the entire library
+import { connect } from 'react-redux';
+
+// Application state has a books property that is a list of books, we want that
+// to appear inside the renderList() container and do that by adding the mapStateToProps
+// connection
+
+class BookList extends Component {
   // renderList maps over an array of books which will be passed to the component
   // For each book in the array, create an li that contains book's title
   renderList() {
     return this.props.books.map((book) => {
       return (
-        <li key={book.title} className="list-group-item">{book.title})</li>
+        <li key={book.title} className="list-group-item">{book.title}</li>
       );
     });
   }
@@ -29,3 +38,23 @@ export default class BookList extends Component {
       )
   }
 }
+
+// This is the connection between React and Redux
+
+// When state changes, this function will re-render
+function mapStateToProps(state) {
+  // Takes application state as an argument and whatever is returned will show up
+  // as this.props inside BookList container
+  return {
+    books: state.books
+    // returns this.props.books to be used in renderList above
+  };
+}
+
+// connect takes a function and a component and produces a container
+export default connect(mapStateToProps)(BookList);
+
+
+
+
+
