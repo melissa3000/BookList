@@ -3,8 +3,17 @@ import { connect } from 'react-redux';
 
 class BookDetail extends Component {
   render() {
+    // Add initial check so that if there's not an initial book selected, create
+    // a message for the user so that JS doesn't error out on a null state
+    if (!this.props.book) {
+      return <div>Select a book to get started.</div>;
+    }
+
     return (
-      <div>Book Detail!</div>
+      <div>
+        <h3>Details for:</h3>
+        <div>{this.props.book.title}</div>
+      </div>
       );
   }
 }
